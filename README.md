@@ -1,163 +1,250 @@
-# Campus
+<p align="center">
+  <img src="docs/images/banner-en.png" alt="Campus — a student planner that keeps your schedule, Platonus and AI in one place" width="100%">
+</p>
 
-Университетский planner на React, TypeScript и Tailwind CSS. Основной backend — Cloudflare Worker (Hono), D1, R2 и Workers AI.
+<p align="center">
+  <a href="https://campus-planner.mymemory9.workers.dev"><b>Open Campus</b></a> ·
+  <a href="#-quick-start">Install</a> ·
+  <a href="docs/ARCHITECTURE.md">Architecture</a> ·
+  <a href="#-api">API</a> ·
+  <a href="https://github.com/ArabKustam/Campus/issues">Report a bug</a> ·
+  <a href="README.ru.md">🇷🇺 Русский</a>
+</p>
 
-## Основной запуск: Cloudflare Worker
+<p align="center">
+  <a href="https://campus-planner.mymemory9.workers.dev"><img alt="Live demo" src="https://img.shields.io/badge/demo-live-2563eb?style=flat-square&logo=cloudflare&logoColor=white"></a>
+  <img alt="Cloudflare Workers" src="https://img.shields.io/badge/Cloudflare-Workers%20·%20D1%20·%20AI-1e40af?style=flat-square&logo=cloudflareworkers&logoColor=white">
+  <img alt="React 19" src="https://img.shields.io/badge/React-19-3b82f6?style=flat-square&logo=react&logoColor=white">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6-2563eb?style=flat-square&logo=typescript&logoColor=white">
+  <img alt="PWA" src="https://img.shields.io/badge/PWA-iOS%20·%20Android%20·%20desktop-16a34a?style=flat-square">
+  <img alt="Languages" src="https://img.shields.io/badge/UI-RU%20·%20EN%20·%20KZ-6b7280?style=flat-square">
+</p>
+
+**Campus** puts a student's university life in one window: a schedule that knows which class is on right now, grades and course materials from Platonus, assignments and files attached to each class, an AI assistant, and automatic parsing of your group's Telegram and WhatsApp chats. It runs in the browser and installs on your phone like an app.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/hero-en-dark.gif">
+    <img src="docs/images/hero-en-light.gif" alt="Campus schedule: switching days, week view, opening a class and adding homework" width="880">
+  </picture>
+</p>
+
+## ✨ Features
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/feature-schedule-en-dark.png">
+  <img src="docs/images/feature-schedule-en-light.png" alt="01 · A living schedule" width="100%">
+</picture>
+
+Day and week views, odd and even weeks, holidays and the academic week number. The current class is highlighted with a progress bar and a countdown to the break. Moves, cancellations and room changes apply to a single date and never break the regular timetable.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/schedule-week-en-dark.png">
+  <img src="docs/images/schedule-week-en-light.png" alt="Week schedule" width="100%">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/feature-platonus-en-dark.png">
+  <img src="docs/images/feature-platonus-en-light.png" alt="02 · Platonus in one click" width="100%">
+</picture>
+
+On first sign-in your Platonus login is all it takes: Campus imports the schedule, journal grades and course materials (UMKD), then keeps them up to date. The calculator shows what you need on the exam for the grade you want, and the formula can be adjusted to match your syllabus.
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/images/onboarding-en.png" alt="Connecting Platonus on first sign-in"></td>
+    <td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/grades-en-dark.png"><img src="docs/images/grades-en-light.png" alt="Exam grade calculator"></picture></td>
+  </tr>
+</table>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/feature-ai-en-dark.png">
+  <img src="docs/images/feature-ai-en-light.png" alt="03 · AI assistant" width="100%">
+</picture>
+
+Ask “What do I have tomorrow?” or “How many points am I short of 90?” and the assistant answers from your schedule, assignments and grades. You can also give it tasks, such as “Cancel the first class on Friday in two weeks” or “Calculus homework: problems 1–5 for the next class”. If a request is ambiguous it asks a follow-up, and every action it takes can be undone. Send it a photo of the whiteboard, a screenshot or a PDF and it reads the file and attaches it to the right class.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/assistant-en-dark.png">
+  <img src="docs/images/assistant-en-light.png" alt="AI assistant chat" width="100%">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/feature-chats-en-dark.png">
+  <img src="docs/images/feature-chats-en-light.png" alt="04 · Group chats → schedule" width="100%">
+</picture>
+
+A small connector on your computer links to Telegram and WhatsApp by QR code, like any other linked device. Campus receives messages **only from the chats you pick**. AI turns “no first class tomorrow” or “the lab moves to room 420” into proposed schedule changes. Each proposal is checked for subject, date, conflicts and model confidence. Only the action types you allow are applied automatically; everything else waits for your approval on the Processing page.
+
+- QR sign-in, sessions stay on your machine
+- Messages from unselected chats are rejected before they reach the server
+- Every applied change keeps its source message and can be reverted
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/feature-tasks-en-dark.png">
+  <img src="docs/images/feature-tasks-en-light.png" alt="05 · Assignments & materials" width="100%">
+</picture>
+
+Add homework straight from a class card: for this class, the next one or any date. Notes, links and files (photos, PDFs, documents) live with the specific lesson too. All assignments and deadlines are collected on one page.
+
+<table>
+  <tr>
+    <td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/lesson-en-dark.png"><img src="docs/images/lesson-en-light.png" alt="Class card with homework and files"></picture></td>
+    <td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/tasks-en-dark.png"><img src="docs/images/tasks-en-light.png" alt="Assignment list"></picture></td>
+  </tr>
+</table>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/feature-group-en-dark.png">
+  <img src="docs/images/feature-group-en-light.png" alt="06 · Your group, on your phone" width="100%">
+</picture>
+
+The group leader creates a group and shares an invite link. Classmates get a shared schedule, assignments and course materials, with roles (leader, deputy, member) and subgroups. Campus installs as a PWA, follows your light or dark theme, and the interface is available in Russian, English and Kazakh.
+
+<table>
+  <tr>
+    <td width="25%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/mobile-en-dark.png"><img src="docs/images/mobile-en-light.png" alt="Mobile schedule"></picture></td>
+    <td width="25%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/mobile-menu-en-dark.png"><img src="docs/images/mobile-menu-en-light.png" alt="Mobile menu"></picture></td>
+    <td width="50%"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/group-en-dark.png"><img src="docs/images/group-en-light.png" alt="Creating a group or joining by invite"></picture></td>
+  </tr>
+</table>
+
+## 🧭 How it works
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/how-it-works-en-dark.png">
+  <img src="docs/images/how-it-works-en-light.png" alt="Diagram: Platonus, messengers and the user → Worker API, Workers AI and validation → schedule, assignments, grades, notifications" width="100%">
+</picture>
+
+- **Frontend:** React 19, TypeScript, Tailwind CSS, Vite, PWA.
+- **Backend:** a Cloudflare Worker built on Hono. Accounts and sessions live in D1, and each user's data lives in their own SQLite Durable Object.
+- **AI:** Workers AI returns structured JSON actions only (`ADD_HOMEWORK`, `CANCEL_LESSON`, `MOVE_LESSON`, `CHANGE_ROOM` …). They are validated by Zod and then by business rules. The model never sees SQL and never writes to the database.
+- **Connector** (`bridge/`): a local Node.js process for Telegram (MTProto) and WhatsApp Web. Messenger sessions stay on your computer.
+
+The processing pipeline, context limits and the legacy backend are documented in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) (in Russian).
+
+## 📋 Requirements
+
+- Node.js 22 LTS or newer
+- To deploy: a Cloudflare account (Workers, D1, Durable Objects, Workers AI)
+- For the messenger connector: a computer that stays on, plus your own API ID/API Hash from [my.telegram.org/apps](https://my.telegram.org/apps) for Telegram
+
+## 🚀 Quick start
+
+The hosted version runs at **[campus-planner.mymemory9.workers.dev](https://campus-planner.mymemory9.workers.dev)**. Create an account and connect Platonus.
+
+Run it locally:
 
 ```bash
+git clone https://github.com/ArabKustam/Campus.git
+cd Campus
 npm install
 npm run build:client
 npm run db:migrate:local
+npx wrangler d1 execute campus-db --local --file account-migrations/0002_groups.sql
 npm run dev
 ```
 
-Vite проксирует `/api` на Wrangler (`127.0.0.1:8787`). `npm run build` проверяет frontend/Worker TypeScript, собирает frontend и выполняет Wrangler **dry-run**, без deployment. `npm start` запускает локальный Worker. Production IDs и URL в `wrangler.jsonc` нужно настроить отдельно; реальные Cloudflare ресурсы и секреты автоматически не создаются.
+Open http://localhost:5173. Vite proxies `/api` to Wrangler (`127.0.0.1:8787`). New accounts don't get AI, groups, messengers or assignments by default. The administrator (`ADMIN_ACCOUNT_ID`) turns them on in the admin panel.
 
-## AI processing pipeline
-
-Backend до вызова модели вычисляет локальную дату/время (часовой пояс `app.timezone`, по умолчанию `Asia/Almaty`), день недели, чётность, фактические занятия дня, текущую/предыдущую/следующую пару и ближайшие даты упомянутых предметов. Отмены и переносы учитываются через `lesson_overrides`, шаблон не меняется. Будущие занятия передаются с ID слота, фактической и исходной датой.
-
-Обработка идёт небольшими пакетами. У каждого сообщения есть окно предыдущих и следующих **уже сохранённых** сообщений той же группы и цепочка reply. Сообщения, которые ещё не поступили, недоступны. Приоритет: название предмета → преподаватель → дата/день → reply → соседние сообщения → текущая пара → ближайшая пара. Неоднозначное определение не является подтверждённым фактом.
-
-Модель возвращает только structured JSON (`actions`), проверяемый Zod. Она не получает SQL, инструменты доступа к базе или право записи. Поддерживаются `ADD_HOMEWORK`, `ADD_NOTE`, `ADD_MATERIAL`, `ADD_BOOK_LIST`, `ADD_LINK`, `CANCEL_LESSON`, `MOVE_LESSON`, `CHANGE_ROOM`, `CHANGE_TIME`, `SET_ONLINE`, `IGNORE`, `UNKNOWN`.
-
-Перед применением backend проверяет предмет, дату и занятие, дубли и конфликты. Автоприменение требует успешной проверки, `confidence >= automation.minimumConfidence` и явно включённого разрешения соответствующего типа в `automation.autoApply`. Низкая уверенность и ошибки проверки остаются предложениями для ручной проверки; `IGNORE`/`UNKNOWN` не изменяют учебные данные.
-
-Связь хранится через `ai_actions.message_id`, `applied_entity_type`, `applied_entity_id`; обратная операция — в `revert_payload_json`. Изменения доступны через apply/reject/revert API, а не прямую запись модели. При конфликте возврат должен быть отклонён, а не затирать более поздние правки.
-
-- `POST /api/processing/run` — асинхронный запуск (202); состояние читать через `GET /api/processing`.
-- `PATCH /api/actions/:id` — редактирование предложения с повторной проверкой.
-- `POST /api/actions/:id/apply`, `/reject`, `/revert` — жизненный цикл.
-- Cron использует тот же processing service.
-
-Для локальных тестов ответ модели подставляется через `AiRunner`; это не подтверждает качество реальной модели. Настоящий Workers AI требует Cloudflare binding и авторизации. `wrangler.test.jsonc` намеренно не содержит AI binding и не вызывает платную модель.
-
-Контекст ограничен: до 20 текущих сообщений за запуск, до 10 соседей с каждой стороны, reply до 5 звеньев, до 4 будущих дат предмета в горизонте 42 дней. Цитата reply сохраняется даже когда исходное сообщение не было импортировано; неизвестные ID и время такой цитаты остаются `null`.
-
-HTTP smoke без внешнего AI и секретов (отдельная локальная БД):
+Deploy to Cloudflare:
 
 ```bash
-npm run build:client
-npx wrangler d1 migrations apply campus-smoke-db --local --config wrangler.smoke.jsonc
-npx wrangler dev --local --config wrangler.smoke.jsonc --port 8791
+npm run db:migrate:remote
+npm run deploy
 ```
 
-Проверить `http://127.0.0.1:8791/health`, `/api/processing` и `/api/schedule/day?date=2026-09-03`. На пустой очереди запуск завершается без AI-вызова; это проверка HTTP/БД, не модели.
+Before deploying, put your resource IDs and `PUBLIC_APP_URL` into `wrangler.production.jsonc` and set secrets with `wrangler secret put`.
 
-```bash
-npm test
-npm run lint
-npm run build
+## ⚙️ Configuration
+
+| Setting | Where | Purpose |
+|---|---|---|
+| `AI_MODEL` | `wrangler*.jsonc` → `vars` | Workers AI model for message parsing (default `@cf/google/gemma-4-26b-a4b-it`) |
+| `ASSISTANT_MODEL` | `vars` | Separate model for the AI assistant (optional) |
+| `PUBLIC_APP_URL` | `vars` | Public site URL, used for invites and Origin checks |
+| `CREDENTIALS_ENCRYPTION_KEY` | secret | Encrypts saved Platonus credentials |
+| `ADMIN_ACCOUNT_ID` | secret / `vars` | Administrator account: admin panel and feature access |
+| `WHATSAPP_BRIDGE_SECRET` | secret | Shared secret between the Worker and the connector |
+| `CAMPUS_APP_URL` | `bridge/.env` | The site the connector accepts requests from |
+| `automation.minimumConfidence`, `automation.autoApply` | Settings → Automation | Confidence threshold and which action types AI may apply on its own |
+
+## 🛠 Commands
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Worker + Vite with hot reload |
+| `npm run build` | Type checks, frontend build, Worker dry run |
+| `npm test` | Worker, frontend and legacy tests |
+| `npm run lint` | oxlint |
+| `npm run db:migrate:local` / `:remote` | D1 migrations |
+| `npm run deploy` | Build and publish with `wrangler.production.jsonc` |
+| `npm run connector` | Start the local messenger connector |
+
+To run the connector on another computer, download it in the app: **Settings → Telegram/WhatsApp → How to run the connector**. Unzip it and run `npm ci && npm start` ([guide, in Russian](bridge/README.md)).
+
+## 🔌 API
+
+Every request runs as the signed-in user (cookie session). Requests that change data need the `X-Campus-Request: 1` header.
+
+```js
+// Schedule for a given day
+const day = await fetch('/api/schedule/day?date=2026-10-05').then(r => r.json())
+
+// New assignment for a class
+await fetch('/api/homework', {
+  method: 'POST',
+  headers: {'content-type': 'application/json', 'x-campus-request': '1'},
+  body: JSON.stringify({
+    subjectId: 'subject-id',
+    scheduleSlotId: 'slot-id',
+    title: 'Lab #3: database normalization',
+    dueAt: '2026-10-08T23:59:00+05:00',
+  }),
+})
 ```
 
-## Legacy Node.js backend (справочно)
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/api/schedule?from=&to=` · `/api/schedule/day?date=` | Schedule with moves and cancellations applied |
+| `GET/POST/PATCH` | `/api/catalog/{subjects,teachers,slots}` | Subjects, teachers, regular classes |
+| `GET/POST/PATCH` | `/api/homework` · `/api/materials` | Assignments and materials |
+| `POST` | `/api/processing/run` | Start AI parsing of new messages (202) |
+| `POST` | `/api/actions/:id/{apply,reject,revert}` | AI proposal lifecycle |
 
-Ниже описан прежний Express/SQLite backend из `server/`, а не текущий Worker. Его отдельная команда — `npm run dev:legacy-server`. Его `.env`, локальные ключи и webhook URL не являются конфигурацией Cloudflare Worker.
+## ❓ FAQ
 
-## Запуск
+<details>
+<summary><b>Does Campus store my Platonus password?</b></summary>
 
-```bash
-npm install
-cp .env.example .env
-npm run dev
-```
+Only if you tick “Remember sign-in details”. In that case the login and password are stored encrypted (`CREDENTIALS_ENCRYPTION_KEY`) and data refreshes automatically. Without it, every refresh needs a new sign-in.
+</details>
 
-Frontend запускается через Vite, backend — на `http://127.0.0.1:8787`. Vite проксирует `/api` на backend.
+<details>
+<summary><b>Which universities are supported?</b></summary>
 
-Для production-сборки:
+The Platonus address is currently set to `platonus.kstu.kz` (`worker/services/platonus-api.ts`). For another university on Platonus, change `PLATONUS_ORIGIN` and check the page parsing. Without Platonus you can keep the schedule by hand: choose “Set up manually” on first sign-in.
+</details>
 
-```bash
-npm run build
-npm start
-```
+<details>
+<summary><b>Which messages does the AI see?</b></summary>
 
-## Telegram Bot API
+Only messages from the chats selected in settings, starting from 30 August 2026. The text is processed by Cloudflare Workers AI. Private chats and unselected groups are rejected before anything is sent to the server.
+</details>
 
-Интеграция использует webhook, а не polling.
+<details>
+<summary><b>Does the connector have to keep running?</b></summary>
 
-1. Создайте публичный HTTPS-адрес backend (production domain или tunnel).
-2. Укажите его без завершающего `/`:
+Yes. It's a regular program on your computer, not a cloud service. While it's closed, new messages aren't synced. Running `npm start` again resumes the saved connections.
+</details>
 
-```env
-TELEGRAM_WEBHOOK_BASE_URL=https://campus.example.com
-```
+## 💬 Support
 
-3. При необходимости задайте постоянный ключ шифрования токена:
+- Bugs and ideas: [GitHub Issues](https://github.com/ArabKustam/Campus/issues)
+- In the app: **Help and feedback** in the sidebar
 
-```bash
-openssl rand -base64 32
-```
+## 📄 License
 
-```env
-TELEGRAM_TOKEN_ENCRYPTION_KEY=<base64-key>
-```
+No license file has been added yet, so all rights are reserved by the author.
 
-Если ключ не указан, backend создаёт `.data/telegram-token.key` с правами `0600`. Каталог `.data` и файл `.env` исключены из Git.
-
-4. Откройте **Настройки → Telegram**, введите Bot Token и нажмите **Проверить и подключить**.
-5. Добавьте бота в группу. Чтобы бот видел все сообщения, отключите Privacy Mode через BotFather или назначьте бота администратором.
-6. После первого webhook-сообщения группа появится в разделе **Найденные группы**.
-
-Bot Token отправляется только в backend endpoint, шифруется AES-256-GCM и не попадает в frontend bundle, `localStorage` или ответы API.
-
-### Backend endpoints
-
-- `GET /api/integrations/telegram` — безопасное состояние интеграции;
-- `POST /api/integrations/telegram/connect` — проверка токена и регистрация webhook;
-- `POST /api/integrations/telegram/test` — `getMe` + `getWebhookInfo`;
-- `PATCH /api/integrations/telegram/groups/:chatId` — выбор группы;
-- `DELETE /api/integrations/telegram` — удаление webhook и серверного токена;
-- `POST /api/webhooks/telegram/:secret` — входящие Telegram updates.
-
-Webhook проверяет секрет одновременно в URL и заголовке `X-Telegram-Bot-Api-Secret-Token`.
-
-### Хранилище
-
-SQLite находится в `.data/campus.sqlite`. Для каждого группового сообщения backend сохраняет:
-
-- `external_message_id`;
-- `chat_id`;
-- `chat_name`;
-- `sender`;
-- `text`;
-- `sent_at`;
-- `reply_to`;
-- `message_type`;
-- `attachment_reference`;
-- `processed_at`.
-
-Повторная доставка одного сообщения безопасна: запись дедуплицируется по `chat_id + external_message_id`.
-
-## WhatsApp Bridge
-
-Обычные группы личного WhatsApp-аккаунта нельзя читать через официальный WhatsApp Cloud API. Для этого сценария Campus использует отдельный WhatsApp Bridge, работающий вне Cloudflare Worker и подключающийся как связанное устройство.
-
-Текущая реализация содержит mock bridge для разработки интерфейса и API-контракта. Он создаёт pairing QR, имитирует подключение и возвращает тестовый список групп. Реальный bridge должен реализовать тот же контракт и работать как отдельный процесс или сервис.
-
-Настройте общий секрет между bridge и Campus backend:
-
-```env
-WHATSAPP_BRIDGE_SECRET=<long-random-secret>
-```
-
-Если значение отсутствует, локальный backend создаёт `.data/whatsapp-bridge.key` с правами `0600`.
-
-### Backend endpoints
-
-- `GET /api/integrations/whatsapp` — статус, QR и доступные группы;
-- `POST /api/integrations/whatsapp/connect` — запрос pairing QR у bridge;
-- `PUT /api/integrations/whatsapp/groups/:groupId` — выбор единственной разрешённой группы;
-- `DELETE /api/integrations/whatsapp` — отключение;
-- `POST /api/bridges/whatsapp/messages` — приём нормализованного группового сообщения от bridge.
-
-Последний endpoint требует заголовок `X-WhatsApp-Bridge-Secret`. Личные сообщения и сообщения невыбранных групп отклоняются до записи в хранилище.
-
-Telegram и WhatsApp реализуют общий интерфейс `MessageSource` и приводят входящие события к одной структуре `IncomingSourceMessage` с полями источника, внешнего ID, группы, отправителя, текста, времени, reply context, типа сообщения, вложения и времени обработки.
-
-## Проверка
-
-```bash
-npm test
-npm run lint
-npm run build
-```
+<sub>README images are built by the scripts in [`docs/assets-src`](docs/assets-src): screenshots are captured from the app running locally, and the banner and diagram are rendered from HTML.</sub>

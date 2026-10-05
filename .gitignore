@@ -38,3 +38,6 @@ ux-audit-backup.zip
 # Messenger connector sessions and secrets
 bridge/.data
 bridge/.env
+
+# README asset generator temp output
+docs/assets-src/.frames

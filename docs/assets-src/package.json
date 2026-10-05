@@ -1,0 +1,12 @@
+{
+  "name": "campus-readme-assets",
+  "private": true,
+  "type": "module",
+  "description": "Rebuilds README banners, feature headers, diagram and screenshots",
+  "scripts": {
+    "graphics": "node render-graphics.mjs",
+    "screens": "node capture-screens.mjs",
+    "all": "npm run graphics && npm run screens"
+  },
+  "dependencies": { "puppeteer-core": "^24.38.0" }
+}
