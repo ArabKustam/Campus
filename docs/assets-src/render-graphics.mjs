@@ -27,6 +27,8 @@ const icon = {
   shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
   bell: '<path d="M10.27 21a2 2 0 0 0 3.46 0M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/>',
   file: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 13h4M10 17h4"/>',
+  book: '<path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
+  chart: '<path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/>',
   cpu: '<rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>',
 }
 const svg = (name, size = 24, color = 'currentColor', width = 2) => `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round">${icon[name]}</svg>`
@@ -38,11 +40,13 @@ const text = {
     today: 'Понедельник · Сегодня', now: 'Сейчас', left: 'Осталось 54 мин',
     lessons: [['09:00', 'Дискретная математика', 'Лекция · 304', '#2563eb'], ['10:55', 'Базы данных', 'Лабораторная · 218', '#16a34a'], ['13:10', 'Английский язык', 'Практика · 112', '#db2777']],
     features: {
-      schedule: ['Живое расписание', 'День и неделя, числитель/знаменатель, текущая пара с прогрессом'],
-      platonus: ['Platonus в один клик', 'Расписание, оценки и УМКД подтягиваются автоматически'],
+      schedule: ['Живое расписание', 'Текущая пара, время до начала и до перемены, день и неделя'],
+      grades: ['Оценки из Platonus', 'Баллы по рубежам, оценки по датам и калькулятор экзамена'],
+      umkd: ['УМКД под рукой', 'Силлабусы, лекции и задания по каждому предмету с предпросмотром PDF'],
       ai: ['AI-помощник', 'Отвечает по вашим данным и меняет расписание по команде — с отменой'],
       chats: ['Чаты группы → расписание', 'AI читает выбранные чаты Telegram и WhatsApp и предлагает изменения'],
       tasks: ['Задания и материалы', 'Домашка, заметки и файлы привязаны к конкретной паре'],
+      admin: ['Админ-панель', 'Аналитика активности, пользователи, права и хранилище'],
       group: ['Группа и телефон', 'Общее расписание для одногруппников, PWA и три языка'],
     },
     d: {
@@ -59,11 +63,13 @@ const text = {
     today: 'Monday · Today', now: 'Now', left: '54 min left',
     lessons: [['09:00', 'Discrete Mathematics', 'Lecture · 304', '#2563eb'], ['10:55', 'Databases', 'Lab · 218', '#16a34a'], ['13:10', 'English', 'Practice · 112', '#db2777']],
     features: {
-      schedule: ['A living schedule', 'Day and week views, odd/even weeks, the current class with a progress bar'],
-      platonus: ['Platonus in one click', 'Schedule, grades and course materials are imported automatically'],
+      schedule: ['A living schedule', 'The current class, time until it starts and until the break, day and week views'],
+      grades: ['Grades from Platonus', 'Midterm scores, marks by date and an exam calculator'],
+      umkd: ['Course materials at hand', 'Syllabi, lectures and assignments for every subject, with PDF preview'],
       ai: ['AI assistant', 'Answers from your own data and edits the schedule on command — with undo'],
       chats: ['Group chats → schedule', 'AI reads the Telegram and WhatsApp chats you pick and proposes changes'],
       tasks: ['Assignments & materials', 'Homework, notes and files are attached to a specific class'],
+      admin: ['Admin panel', 'Activity analytics, users, feature access and storage'],
       group: ['Your group, on your phone', 'A shared schedule for classmates, installable PWA, three languages'],
     },
     d: {
@@ -118,7 +124,7 @@ function banner(lang) {
 
 function feature(lang, mode, key, n, ic) {
   const c = theme[mode], [title, sub] = text[lang].features[key]
-  return page0(`<div class="f"><div class="ic">${svg(ic, 30, c.primary)}</div><div class="n">0${n}</div><div><h2>${title}</h2><p>${sub}</p></div></div>`, `
+  return page0(`<div class="f"><div class="ic">${svg(ic, 30, c.primary)}</div><div class="n">${String(n).padStart(2, '0')}</div><div><h2>${title}</h2><p>${sub}</p></div></div>`, `
   .f{width:1280px;height:132px;display:flex;align-items:center;gap:24px;padding:0 36px;background:${c.card};border:1px solid ${c.border};border-radius:18px;position:relative;overflow:hidden}
   .f:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:${c.primary}}
   .ic{width:64px;height:64px;border-radius:16px;background:${c.tint};display:grid;place-items:center;flex:none}
@@ -167,7 +173,7 @@ async function render(html, file, width) {
   const el = await page.$('body > div')
   await el.screenshot({path: out + file, omitBackground: true}); console.log('  ✓', file)
 }
-const features = [['schedule', 'calendar'], ['platonus', 'grad'], ['ai', 'sparkles'], ['chats', 'chat'], ['tasks', 'check'], ['group', 'users']]
+const features = [['schedule', 'calendar'], ['grades', 'grad'], ['umkd', 'book'], ['ai', 'sparkles'], ['chats', 'chat'], ['tasks', 'check'], ['admin', 'chart'], ['group', 'users']]
 for (const lang of ['ru', 'en']) {
   await render(banner(lang), `banner-${lang}.png`, 1280)
   for (const mode of ['light', 'dark']) {

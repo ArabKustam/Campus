@@ -1,6 +1,6 @@
 # Campus — архитектура и backend
 
-> Техническое описание, перенесённое из прежнего README. Обзор проекта — в [README](../README.ru.md).
+> Техническое описание, перенесённое из прежнего README. Обзор проекта — в [README](../README.md).
 
 Университетский planner на React, TypeScript и Tailwind CSS. Основной backend — Cloudflare Worker (Hono), D1, R2 и Workers AI.
 

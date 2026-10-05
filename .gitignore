@@ -41,3 +41,6 @@ bridge/.env
 
 # README asset generator temp output
 docs/assets-src/.frames
+
+# Local demo accounts used by docs/assets-src/capture-screens.mjs
+docs/assets-src/.demo-accounts.json
