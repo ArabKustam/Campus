@@ -1,0 +1,10 @@
+import {it,expect} from 'vitest'
+import {resolveDirectCancellation} from '../services/direct-cancellation'
+import type {ProcessingMessageContext,ContextLesson} from '../services/processing-context'
+const lesson:ContextLesson={scheduleSlotId:'slot',date:'2026-09-12',originalDate:'2026-09-12',subjectId:'subject',subjectName:'Социология',teacherId:null,teacherName:null,slotNumber:1,startTime:'09:00',endTime:'10:45',status:'normal',room:'420'}
+function context(text:string,lessons=[lesson]):ProcessingMessageContext{return {currentMessage:{id:'msg',externalMessageId:'msg',sender:{},text,sentAt:'2026-09-11T05:00:00Z'},messageDate:'2026-09-11',messageTime:'10:00',weekday:5,weekType:'even',dayLessons:[],activeLesson:null,previousLesson:null,nextLesson:null,referencedDates:['2026-09-12'],referencedLessons:lessons,subjectCandidates:[],nextLessonDatesBySubject:{},nextLessonsBySubject:{},conversationDates:[],conversation:{previous:[],next:[],replyChain:[],current:{} as any}}}
+it('cancels tomorrow first pair without requiring a subject name',()=>{expect(resolveDirectCancellation(context('отмени завтра первую пару'))?.proposal?.targetLessonId).toBe('slot')})
+it('asks a specific question when two lessons match',()=>{const c=context('отмени завтра пару',[lesson,{...lesson,scheduleSlotId:'second',slotNumber:2,startTime:'11:00'}]);expect(resolveDirectCancellation(c)?.proposal).toBeUndefined();expect(resolveDirectCancellation(c)?.question).toContain('Какую пару')})
+it('does not assume a date when only a subject is given',()=>{const c=context('отмени социологию');c.referencedDates=[];expect(resolveDirectCancellation(c)?.question).toContain('На какую дату')})
+it('does not cancel negated or conditional requests',()=>{for(const text of ['не отменяй завтра первую пару','не надо отменить завтра пару','если отменить завтра пару?'])expect(resolveDirectCancellation(context(text))).toBeNull()})
+it('resolves a numbered slot and preserves the original date of a moved lesson',()=>{const c=context('отмени завтра 2-ю пару',[{...lesson,slotNumber:2,originalDate:'2026-09-10'}]);expect(resolveDirectCancellation(c)?.proposal?.targetDate).toBe('2026-09-10')})

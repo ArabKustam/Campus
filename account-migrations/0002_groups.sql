@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS study_groups(id TEXT PRIMARY KEY,name TEXT NOT NULL,owner_id TEXT NOT NULL REFERENCES accounts(id),created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS study_subgroups(id TEXT PRIMARY KEY,group_id TEXT NOT NULL REFERENCES study_groups(id) ON DELETE CASCADE,name TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS group_members(account_id TEXT PRIMARY KEY REFERENCES accounts(id) ON DELETE CASCADE,group_id TEXT NOT NULL REFERENCES study_groups(id) ON DELETE CASCADE,role TEXT NOT NULL CHECK(role IN('owner','head','subhead','member')),subgroup_id TEXT REFERENCES study_subgroups(id),requested_subgroup_id TEXT REFERENCES study_subgroups(id));
+CREATE TABLE IF NOT EXISTS group_invites(token_hash TEXT PRIMARY KEY,group_id TEXT NOT NULL REFERENCES study_groups(id) ON DELETE CASCADE,expires_at INTEGER NOT NULL,revoked INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS group_events(id TEXT PRIMARY KEY,group_id TEXT NOT NULL REFERENCES study_groups(id) ON DELETE CASCADE,actor_id TEXT NOT NULL,action TEXT NOT NULL,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS account_onboarding(account_id TEXT PRIMARY KEY REFERENCES accounts(id) ON DELETE CASCADE,completed INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS group_sources(group_id TEXT NOT NULL REFERENCES study_groups(id) ON DELETE CASCADE,scope TEXT NOT NULL,account_id TEXT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,PRIMARY KEY(group_id,scope));
+CREATE TABLE IF NOT EXISTS group_schedule_notices(group_id TEXT NOT NULL,scope TEXT NOT NULL,fingerprint TEXT NOT NULL,changed INTEGER NOT NULL DEFAULT 0,PRIMARY KEY(group_id,scope));
+CREATE TABLE IF NOT EXISTS group_homework_progress(account_id TEXT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,group_id TEXT NOT NULL REFERENCES study_groups(id) ON DELETE CASCADE,homework_id TEXT NOT NULL,status TEXT NOT NULL,PRIMARY KEY(account_id,group_id,homework_id));
+CREATE UNIQUE INDEX IF NOT EXISTS one_owner_per_group ON group_members(group_id) WHERE role='owner';

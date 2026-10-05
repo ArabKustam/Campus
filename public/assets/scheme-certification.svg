@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#f8fafc"/>
+  <rect x="72" y="64" width="1056" height="632" rx="18" fill="#ffffff" stroke="#dbe2ea" stroke-width="3"/>
+  <text x="120" y="138" fill="#172033" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="600">Схема сертификации средств ИБ</text>
+  <text x="120" y="178" fill="#718096" font-family="Inter, Arial, sans-serif" font-size="20">Материал к занятию · 3 сентября</text>
+  <g font-family="Inter, Arial, sans-serif" text-anchor="middle">
+    <rect x="120" y="260" width="240" height="104" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+    <text x="240" y="305" fill="#1e3a5f" font-size="21" font-weight="600">Требования</text>
+    <text x="240" y="335" fill="#52708f" font-size="17">нормативная база</text>
+    <rect x="480" y="260" width="240" height="104" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="600" y="305" fill="#243047" font-size="21" font-weight="600">Испытания</text>
+    <text x="600" y="335" fill="#64748b" font-size="17">оценка соответствия</text>
+    <rect x="840" y="260" width="240" height="104" rx="12" fill="#ecfdf5" stroke="#86efac" stroke-width="2"/>
+    <text x="960" y="305" fill="#14532d" font-size="21" font-weight="600">Сертификат</text>
+    <text x="960" y="335" fill="#4d7c5f" font-size="17">регистрация результата</text>
+  </g>
+  <g fill="none" stroke="#94a3b8" stroke-width="3">
+    <path d="M360 312h100"/><path d="M445 298l15 14-15 14"/>
+    <path d="M720 312h100"/><path d="M805 298l15 14-15 14"/>
+  </g>
+  <rect x="255" y="476" width="690" height="104" rx="12" fill="#fafafa" stroke="#dbe2ea" stroke-width="2"/>
+  <text x="600" y="520" fill="#243047" font-family="Inter, Arial, sans-serif" font-size="21" font-weight="600" text-anchor="middle">Инспекционный контроль</text>
+  <text x="600" y="552" fill="#64748b" font-family="Inter, Arial, sans-serif" font-size="17" text-anchor="middle">Подтверждение соответствия в течение срока действия</text>
+  <path d="M960 364v72c0 24-20 40-44 40H945" fill="none" stroke="#94a3b8" stroke-width="3"/>
+</svg>

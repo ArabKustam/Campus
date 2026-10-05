@@ -1,0 +1,4 @@
+import {expect,it} from 'vitest'
+import {tutorialSchedule,tutorialPhase} from './tutorial'
+it('applies precisely three preview edits and reverses all three',()=>{expect(tutorialSchedule(5,false)).toEqual({cancelled:false,added:false,homework:false});expect(tutorialSchedule(5,true)).toEqual({cancelled:true,added:false,homework:false});expect(tutorialSchedule(6,true)).toEqual({cancelled:true,added:true,homework:false});expect(tutorialSchedule(7,true)).toEqual({cancelled:true,added:true,homework:true});expect(tutorialSchedule(8,false)).toEqual({cancelled:true,added:true,homework:true});expect(tutorialSchedule(8,true)).toEqual({cancelled:false,added:false,homework:false})})
+it('shows the unchanged schedule before applying an animated action',()=>{expect(tutorialPhase(5,4100,10)).toMatchObject({showSchedule:true,applied:false});expect(tutorialPhase(5,6000,10)).toMatchObject({applied:true});expect(tutorialPhase(4,6000,10).showSchedule).toBe(false)})

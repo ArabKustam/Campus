@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "campus-planner-smoke",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-03",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [{ "binding": "DB", "database_name": "campus-smoke-db", "database_id": "22222222-2222-2222-2222-222222222222", "migrations_dir": "migrations" }],
+  "r2_buckets": [{ "binding": "ATTACHMENTS", "bucket_name": "campus-smoke-attachments" }],
+  "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application", "run_worker_first": ["/api/*", "/health"] },
+  "vars": { "AI_MODEL": "disabled-local-smoke", "PUBLIC_APP_URL": "http://127.0.0.1:8791" }
+}

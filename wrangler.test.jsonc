@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "campus-planner-test",
+  "main": "worker/tests/domain-entry.ts",
+  "compatibility_date": "2026-09-03",
+  "compatibility_flags": ["nodejs_compat"],
+  "durable_objects": { "bindings": [{ "name": "WORKSPACES", "class_name": "Workspace" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Workspace"] }],
+  "rules": [{ "type": "Text", "globs": ["**/*.sql"], "fallthrough": true }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "campus-test-db",
+      "database_id": "11111111-1111-1111-1111-111111111111",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "ATTACHMENTS",
+      "bucket_name": "campus-test-attachments"
+    }
+  ],
+  "vars": {
+    "AI_MODEL": "@cf/meta/llama-3.1-8b-instruct-fast",
+    "PUBLIC_APP_URL": "https://campus.test",
+    "CREDENTIALS_ENCRYPTION_KEY": "dGVzdC1vbmx5LWtleS1tdXN0LWJlLTMyLWJ5dGVzISE=",
+    "WHATSAPP_BRIDGE_SECRET": "test-only-bridge-secret"
+  }
+}

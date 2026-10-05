@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS platonus_profile (id INTEGER PRIMARY KEY CHECK(id=1), name TEXT NOT NULL, captured_at TEXT NOT NULL);
